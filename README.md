@@ -70,31 +70,31 @@ Desenvolver uma plataforma capaz de conectar jogadores com características seme
 
 ### 👤 Usuários
 
-* [x] Cadastro de usuário
-* [x] Login
-* [x] Logout
-* [x] Perfil do jogador
-* [x] Edição de informações
-* [x] Configuração de preferências
+* [] Cadastro de usuário
+* [] Login
+* [] Logout
+* [] Perfil do jogador
+* [] Edição de informações
+* [] Configuração de preferências
 
 ### 🔎 Matchmaking
 
-* [x] Busca de jogadores
-* [x] Filtros por jogo
-* [x] Filtros por plataforma
-* [x] Comparação de nível
-* [x] Comparação de estilo de jogo
-* [x] Comparação de disponibilidade
-* [x] Cálculo de compatibilidade
-* [x] Exibição de jogadores recomendados
+* [] Busca de jogadores
+* [] Filtros por jogo
+* [] Filtros por plataforma
+* [] Comparação de nível
+* [] Comparação de estilo de jogo
+* [] Comparação de disponibilidade
+* [] Cálculo de compatibilidade
+* [] Exibição de jogadores recomendados
 
 ### 🤝 Social
 
-* [x] Visualização de perfis
-* [x] Envio de solicitações de amizade
-* [x] Aceitação de solicitações
-* [x] Recusa de solicitações
-* [x] Lista de amigos
+* [] Visualização de perfis
+* [] Envio de solicitações de amizade
+* [] Aceitação de solicitações
+* [] Recusa de solicitações
+* [] Lista de amigos
 
 ---
 
