@@ -1,0 +1,137 @@
+* {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #121212;
+            color: #fff;
+        }
+
+        #topo {
+            width: 100%;
+            min-height: 80px;
+            background-color: #1E1E1E;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0.75rem 1rem;
+        }
+
+        #topo h1 {
+            margin: 0;
+            text-align: center;
+            font-size: clamp(1.8rem, 3vw, 2.5rem);
+            color: #fff;
+        }
+
+        .login-link, .cadastro-link {
+            width: 100%;
+            background-color: #1E1E1E;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            text-align: center;
+        }
+
+        .login-link p, .cadastro-link p {
+            margin: 0;
+            color: #fff;
+            font-size: 0.95rem;
+        }
+
+        .login-link a, .cadastro-link a {
+            color: #7ec8ff;
+            text-decoration: none;
+        }
+
+        .login-link a:hover, .cadastro-link a:hover {
+            text-decoration: underline;
+        }
+
+        main {
+            background-color: #1E1E1E;
+            width: 100%;
+            min-height: calc(100vh - 160px);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 1.5rem 1rem 2rem;
+        }
+
+        h2 {
+            margin: 0 0 1rem;
+            font-size: clamp(1.5rem, 2vw, 2rem);
+            text-align: center;
+        }
+
+        .cadastro-form,
+        .login-form {
+            width: min(100%, 420px);
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+            background-color: #2a2a2a;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+        }
+
+        .cadastro-form label,
+        .login-form label {
+            font-size: 0.95rem;
+            color: #fff;
+        }
+
+        .cadastro-form input,
+        .login-form input {
+            width: 100%;
+            padding: 0.8rem 0.9rem;
+            border: 1px solid #4b4b4b;
+            border-radius: 8px;
+            background-color: #1f1f1f;
+            color: #fff;
+            font-size: 1rem;
+            box-sizing: border-box;
+        }
+
+        .cadastro-form input::placeholder,
+        .login-form input::placeholder {
+            color: #bcbcbc;
+        }
+
+        .cadastro-form button,
+        .login-form button {
+            margin-top: 0.5rem;
+            padding: 0.9rem 1rem;
+            border: none;
+            border-radius: 8px;
+            background-color: #4a90e2;
+            color: #fff;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .cadastro-form button:hover,
+        .login-form button:hover {
+            background-color: #3c7ed9;
+        }
+
+        @media (max-width: 480px) {
+            #topo {
+                min-height: 70px;
+                padding: 0.6rem 0.75rem;
+            }
+
+            .login-link {
+                padding: 0.6rem 0.75rem;
+            }
+
+            .cadastro-form {
+                padding: 1rem;
+            }
+        }
