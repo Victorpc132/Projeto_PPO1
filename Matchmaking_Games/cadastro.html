@@ -31,5 +31,35 @@
             <button type="submit">Criar a minha conta</button>
         </form>
     </main>
+    <script>
+        const formulario = document.querySelector('.cadastro-form');
+
+
+        formulario.addEventListener("submit", async (event) => {
+            event.preventDefault();
+
+
+            const nome = document.querySelector("#nome").value;
+            const email = document.querySelector("#email").value;
+            const senha = document.querySelector("#senha").value;
+
+            const resposta = await fetch("http://localhost:300/usuarios", {
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body:JSON.stringify({
+                    nome: nome,
+                    email: email,
+                    senha: senha
+                })
+                });
+            const dados = await resposta.json();
+
+            alert(dados.mensagem);
+        });
+    </script>
 </body>
 </html>

@@ -1,6 +1,8 @@
 import express from 'express';
 import cors from 'cors';
 import {pool} from './db';
+import { password } from 'bun';
+
 
 
 const app = express();
@@ -34,8 +36,37 @@ app.get("/teste-banco", async (req, res) => {
     }    
 });
 
-console.log("tipo da senha: ", typeof process.env.DB_PASSWORD);
-console.log("Banco:" , process.env.DB_DATABASE);
+app.post("/usuarios", async (req, res) => {
+    try {
+        const { nome, email, senha } = req.body;
+
+        const senhaHash = await password.hash(senha);
+
+        const resultado = await pool.query(
+            `
+            INSERT INTO usuarios (nome, email, senha)
+            VALUES ($1, $2, $3)
+            RETURNING id, nome, email
+            `,
+            [nome, email, senhaHash]
+        );
+
+
+        res.status(201).json({
+            mensagem: "Usuário criado com sucesso!",
+            usuario: resultado.rows[0]
+        });
+
+    } catch (erro) {
+        console.error(erro);
+
+
+        res.status(500).json({
+            mensagem: "Erro ao criar usuário"
+        });
+    }
+});
+
 app.listen(3000, () => {
     console.log('Servidor rodando na porta 3000');
 });
