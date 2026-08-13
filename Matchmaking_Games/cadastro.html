@@ -14,7 +14,7 @@
     <div class="login-link">
       <p>Já tem uma conta? <a href="login.html">Faça login</a></p>
     </div>
-    
+
     <main>
       <h2>Cadastro</h2>
       <form method="POST" class="cadastro-form">
@@ -58,7 +58,7 @@
         const email = document.querySelector("#email").value;
         const senha = document.querySelector("#senha").value;
 
-        const resposta = await fetch("http://localhost:300/usuarios", {
+        const resposta = await fetch("http://localhost:3000/usuarios", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
