@@ -52,13 +52,19 @@ app.post("/usuarios", async (req, res) => {
       mensagem: "Usuário criado com sucesso!",
       usuario: resultado.rows[0],
     });
-  } catch (erro) {
+  } catch (erro: any) {
     console.error(erro);
 
+    if (erro.code === "23505") {
+        return res.status(409).json({
+            mensagem: "Este e-mail já está cadastrado!"
+        });
+    }
+
     res.status(500).json({
-      mensagem: "Erro ao criar usuário",
+        mensagem: "Erro ao criar usuário"
     });
-  }
+}
 });
 
 app.listen(3000, () => {
