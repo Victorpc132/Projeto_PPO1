@@ -1,79 +1,45 @@
 <!doctype html>
 <html lang="pt-BR">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Matchmaking Cadastro</title>
-    <link rel="stylesheet" href="Pages.css" />
-  </head>
-  <body>
-    <aside id="topo">
-      <h1>Matchmaking Cadastro</h1>
-    </aside>
 
-    <div class="login-link">
-      <p>Já tem uma conta? <a href="login.html">Faça login</a></p>
-    </div>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Criar conta | Duo</title>
+  <link rel="stylesheet" href="Pages.css">
+</head>
 
-    <main>
-      <h2>Cadastro</h2>
-      <form method="POST" class="cadastro-form">
-        <label for="nome">Nome:</label>
-        <input
-          type="text"
-          id="nome"
-          name="nome"
-          placeholder="Digite seu nome"
-          required
-        />
-
-        <label for="email">Email:</label>
-        <input
-          type="email"
-          id="email"
-          name="email"
-          placeholder="Digite seu email"
-          required
-        />
-
-        <label for="senha">Senha:</label>
-        <input
-          type="password"
-          id="senha"
-          name="senha"
-          placeholder="Digite sua senha"
-          required
-        />
-
-        <button type="submit">Criar a minha conta</button>
+<body>
+  <main class="auth-shell">
+    <section class="auth-intro"><a class="brand" href="main_page/main.html">DUO<span>/</span>PLAY</a>
+      <p class="eyebrow">Seu próximo squad começa aqui</p>
+      <h1>Jogue com quem joga como você.</h1>
+      <p>Encontre parceiros compatíveis pelo jogo, plataforma, nível e pelo horário em que a diversão realmente
+        acontece.</p>
+    </section>
+    <section class="auth-card">
+      <p class="eyebrow">Primeiro passo</p>
+      <h2>Crie seu perfil</h2>
+      <p>Uma conta simples para começar a encontrar sua dupla.</p>
+      <form class="auth-form" id="register-form"><label for="name">Como podemos te chamar?</label><input id="name"
+          name="name" type="text" placeholder="Seu nickname" autocomplete="name" required><label for="email">Seu melhor
+          e-mail</label><input id="email" name="email" type="email" placeholder="voce@email.com" autocomplete="email"
+          required><label for="password">Crie uma senha</label><input id="password" name="password" type="password"
+          placeholder="Mínimo de 6 caracteres" minlength="6" autocomplete="new-password" required>
+        <p class="password-note" id="password-note"></p><label for="password-confirm">Confirme sua senha</label><input
+          id="password-confirm" type="password" placeholder="Repita sua senha" minlength="6" autocomplete="new-password"
+          required>
+        <p class="message" id="form-message" role="status"></p><button class="button-primary" type="submit">Criar minha
+          conta <span aria-hidden="true">→</span></button>
       </form>
-    </main>
-    <script>
-      const formulario = document.querySelector(".cadastro-form");
+      <p class="auth-switch">Já tem uma conta? <a href="login.html">Entrar agora</a></p><a class="back-link"
+        href="main_page/main.html">← Voltar para início</a>
+    </section>
+  </main>
+  <script>
+    const form = document.querySelector('#register-form'); const password = document.querySelector('#password'); const note = document.querySelector('#password-note'); const message = document.querySelector('#form-message');
+    password.addEventListener('input', () => { const length = password.value.length; note.textContent = length === 0 ? '' : length < 6 ? 'Use pelo menos 6 caracteres.' : length < 9 ? 'Força: boa' : 'Força: excelente'; });
+    form.addEventListener('submit', (event) => { event.preventDefault(); const data = new FormData(form); if (data.get('password') !== document.querySelector('#password-confirm').value) { message.textContent = 'As senhas precisam ser iguais.'; return; } localStorage.removeItem('duoplayLoggedIn'); localStorage.setItem('duoplayUser', JSON.stringify({ name: data.get('name'), email: data.get('email'), password: data.get('password') })); window.location.href = 'login.html?registered=1'; });
+  </script>
+</body>
 
-      formulario.addEventListener("submit", async (event) => {
-        event.preventDefault();
-
-        const nome = document.querySelector("#nome").value;
-        const email = document.querySelector("#email").value;
-        const senha = document.querySelector("#senha").value;
-
-        const resposta = await fetch("http://localhost:3000/usuarios", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-
-          body: JSON.stringify({
-            nome: nome,
-            email: email,
-            senha: senha
-          }),
-        });
-        const dados = await resposta.json();
-
-        alert(dados.mensagem);
-      });
-    </script>
-  </body>
 </html>

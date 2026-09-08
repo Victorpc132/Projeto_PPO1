@@ -1,38 +1,220 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Matchmaking</title>
-    <link rel="stylesheet" href="main.css">
-    <script src="main.js" defer></script>
-</head>
-<body>
-    <aside id="topo">
-        <h1>Matchmaking</h1>
-        <nav>
-            <ul>
-                <li><a href="#">Início</a></li>
-                <li><a href="#">Jogos</a></li>
-                <li><a href="#">Sobre</a></li>
-                <li><a href="#">Contato</a></li>
-            </ul>
-        </nav>
-    </aside>
-    <main>
-        <h1>
-            Encontre seu duo perfeito
-        </h1>
-        <h3>para começar vamos fazer seu cadastro,  ou se ja tiver faça seu login
-        </h3>
-        <div class="Buttons">
-       <a href="/Matchmaking_Games/cadastro.html"> <button id="cadastrar-btn">Cadastrar</button></a>
-        <a href="/Matchmaking_Games/login.html"> <button id="login-btn">Logar</button></a>
-</div>
 
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DuoPlay | Encontre seu duo</title>
+  <link rel="stylesheet" href="main.css">
+  <script src="main.js" defer></script>
+</head>
+
+<body>
+  <div class="app-shell">
+    <aside class="sidebar"><a class="brand" href="#inicio">DUO<span>/</span>PLAY</a>
+      <p class="sidebar-label">Seu espaço de jogo</p>
+      <nav class="nav-list" aria-label="Navegação principal"><button class="nav-item active"
+          data-view="inicio"><span>⌂</span> Visão geral</button><button class="nav-item"
+          data-view="perfil"><span>◉</span> Meu perfil</button><button class="nav-item"
+          data-view="preferencias"><span>✦</span> Preferências</button><button class="nav-item"
+          data-view="encontrar"><span>⌕</span> Encontrar jogadores</button><button class="nav-item"
+          data-view="amigos"><span>♡</span> Amigos</button></nav>
+      <div class="sidebar-bottom"><button class="nav-item" data-view="configuracoes"><span>⚙</span>
+          Configurações</button><a class="logout-link" href="../login.html">Sair da conta</a></div>
+    </aside>
+    <main class="content">
+      <header class="topbar"><button class="mobile-menu" id="menu-toggle" aria-label="Abrir menu">☰</button>
+        <div>
+          <p class="eyebrow">QUARTA-FEIRA, 08 DE SETEMBRO</p>
+          <h1 id="page-title">Visão geral</h1>
+        </div>
+        <div class="user-chip"><span class="avatar" id="user-avatar">DU</span><span id="user-name">Jogador</span></div>
+      </header>
+      <div id="toast" class="toast" role="status"></div>
+      <section class="view active" id="view-inicio">
+        <div class="hero">
+          <div>
+            <p class="eyebrow">MATCHMAKING INTELIGENTE</p>
+            <h2>Encontre alguém<br><em>na sua frequência.</em></h2>
+            <p>Seu próximo duo pode estar a uma partida de distância. Ajuste seus critérios e descubra conexões que
+              fazem sentido.</p><button class="button-primary" data-go="encontrar">Encontrar jogadores
+              <span>→</span></button>
+          </div>
+          <div class="hero-orbit">
+            <div class="orbit orbit-one"></div>
+            <div class="orbit orbit-two"></div>
+            <div class="hero-badge">●<strong>92%</strong><small>compatível</small></div>
+          </div>
+        </div>
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">PARA VOCÊ</p>
+            <h2>Matches em destaque</h2>
+          </div><button class="text-button" data-go="encontrar">Ver todos →</button>
+        </div>
+        <div class="match-grid" id="highlight-grid"></div>
+      </section>
+      <section class="view" id="view-perfil">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">SUA IDENTIDADE</p>
+            <h2>Meu perfil</h2>
+            <p>É assim que outros jogadores vão te encontrar.</p>
+          </div>
+        </div>
+        <form class="panel profile-form" id="profile-form">
+          <div class="profile-cover"><span class="large-avatar" id="profile-avatar">DU</span>
+            <div>
+              <h3 id="profile-title">Seu nickname</h3>
+              <p>Perfil público · atualizado agora</p>
+            </div>
+          </div>
+          <div class="form-grid"><label>Nickname<input name="nickname" id="nickname" required></label><label>Jogo
+              principal<select name="game">
+                <option>Valorant</option>
+                <option>League of Legends</option>
+                <option>Fortnite</option>
+                <option>Counter-Strike 2</option>
+                <option>Apex Legends</option>
+              </select></label><label>Plataforma<select name="platform">
+                <option>PC</option>
+                <option>PlayStation</option>
+                <option>Xbox</option>
+                <option>Switch</option>
+              </select></label><label>Nível de habilidade<select name="level">
+                <option>Iniciante</option>
+                <option>Intermediário</option>
+                <option>Avançado</option>
+                <option>Diamante</option>
+                <option>Imortal</option>
+              </select></label><label>Estilo de jogo<select name="style">
+                <option>Competitivo</option>
+                <option casual>Casual</option>
+                <option>Cooperativo</option>
+                <option>Estratégico</option>
+              </select></label><label>Disponibilidade<select name="availability">
+                <option>Noites</option>
+                <option>Manhãs</option>
+                <option>Tardes</option>
+                <option>Fins de semana</option>
+              </select></label></div><button class="button-primary" type="submit">Salvar perfil</button>
+        </form>
+      </section>
+      <section class="view" id="view-preferencias">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">COMBINAÇÃO</p>
+            <h2>Suas preferências</h2>
+            <p>Defina o que importa para o seu próximo parceiro.</p>
+          </div>
+        </div>
+        <form class="panel preference-form" id="preference-form">
+          <div class="preference-row">
+            <div>
+              <h3>Jogos que você procura</h3>
+              <p>Escolha seu foco para receber matches relevantes.</p>
+            </div>
+            <div class="choice-group" data-choice="game"><button type="button"
+                class="choice active">Valorant</button><button type="button" class="choice">League of
+                Legends</button><button type="button" class="choice">Fortnite</button><button type="button"
+                class="choice">CS2</button></div>
+          </div>
+          <div class="preference-row">
+            <div>
+              <h3>Plataforma</h3>
+              <p>Para facilitar a comunicação e a partida.</p>
+            </div>
+            <div class="choice-group" data-choice="platform"><button type="button"
+                class="choice active">PC</button><button type="button" class="choice">PlayStation</button><button
+                type="button" class="choice">Xbox</button></div>
+          </div>
+          <div class="preference-row">
+            <div>
+              <h3>Horários disponíveis</h3>
+              <p>Quando você costuma estar online?</p>
+            </div>
+            <div class="choice-group" data-choice="time"><button type="button" class="choice">Manhãs</button><button
+                type="button" class="choice active">Noites</button><button type="button" class="choice">Fins de
+                semana</button></div>
+          </div><button class="button-primary" type="submit">Atualizar preferências</button>
+        </form>
+      </section>
+      <section class="view" id="view-encontrar">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">SUA PRÓXIMA PARTIDA</p>
+            <h2>Encontrar jogadores</h2>
+            <p>Filtre por jogo, plataforma e nível. A compatibilidade é calculada em cinco critérios.</p>
+          </div>
+        </div>
+        <form class="filter-bar panel" id="filter-form"><label>Jogo<select id="filter-game">
+              <option>Todos os jogos</option>
+              <option>Valorant</option>
+              <option>League of Legends</option>
+              <option>Fortnite</option>
+            </select></label><label>Plataforma<select id="filter-platform">
+              <option>Todas</option>
+              <option>PC</option>
+              <option>PlayStation</option>
+              <option>Xbox</option>
+            </select></label><label>Nível<select id="filter-level">
+              <option>Todos os níveis</option>
+              <option>Iniciante</option>
+              <option>Intermediário</option>
+              <option>Avançado</option>
+              <option>Diamante</option>
+            </select></label><button class="button-primary" type="submit">Aplicar filtros</button></form>
+        <div class="results-head"><span id="result-count">6 jogadores encontrados</span><span>Ordenados por
+            compatibilidade ↓</span></div>
+        <div class="player-grid" id="player-grid"></div>
+      </section>
+      <section class="view" id="view-amigos">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">SUA REDE</p>
+            <h2>Amigos</h2>
+            <p>Conexões aceitas e convites pendentes.</p>
+          </div>
+        </div>
+        <div class="panel friend-list">
+          <div class="friend-request">
+            <div class="avatar pink">MA</div>
+            <div><strong>Marina Alves</strong>
+              <p>Enviou uma solicitação · Valorant</p>
+            </div><button class="small-button accept">Aceitar</button><button
+              class="small-button decline">Recusar</button>
+          </div>
+          <div class="friend-row">
+            <div class="avatar blue">RL</div>
+            <div><strong>Rafael Lima</strong>
+              <p>Online agora · League of Legends</p>
+            </div><span class="online-dot"></span><button class="small-button">Ver perfil</button>
+          </div>
+          <div class="friend-row">
+            <div class="avatar gold">BS</div>
+            <div><strong>Bianca Souza</strong>
+              <p>Offline há 2h · Fortnite</p>
+            </div><button class="small-button">Ver perfil</button>
+          </div>
+        </div>
+      </section>
+      <section class="view" id="view-configuracoes">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">CONTROLE DA CONTA</p>
+            <h2>Configurações</h2>
+          </div>
+        </div>
+        <div class="panel settings-list"><label class="setting"><span><strong>Perfil público</strong><small>Permitir que
+                outros jogadores encontrem você.</small></span><input type="checkbox" checked><i></i></label><label
+            class="setting"><span><strong>Notificações de novos matches</strong><small>Receba avisos quando alguém
+                compatível aparecer.</small></span><input type="checkbox" checked><i></i></label><label
+            class="setting"><span><strong>Mostrar disponibilidade</strong><small>Seu horário ficará visível no perfil
+                público.</small></span><input type="checkbox" checked><i></i></label><button class="danger-button"
+            id="clear-account">Apagar dados locais</button></div>
+      </section>
     </main>
-    <footer>
-        <p>&copy; 2026 Matchmaking. Todos os direitos reservados.</p>
-    </footer>
+  </div>
 </body>
+
 </html>

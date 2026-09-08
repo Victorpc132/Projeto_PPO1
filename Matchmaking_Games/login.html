@@ -1,28 +1,37 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Matchmaking Login</title>
-    <link rel="stylesheet" href="Pages.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Entrar | Duo</title>
+  <link rel="stylesheet" href="Pages.css">
 </head>
+
 <body>
-    <aside id="topo">
-        <h1>Matchmaking Login</h1>
-    </aside>
-    <div class="cadastro-link">
-        <p>Não tem uma conta? <a href="cadastro.html">Cadastre-se</a></p>
-    </div>
-    <main>
-        <h2>Login</h2>
-        <form method="POST" class="login-form">
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" placeholder="Digite seu email" required>
-            <label for="senha">Senha:</label>
-            <input type="password" id="senha" name="senha" placeholder="Digite sua senha" required>
-            <button type="submit">Entrar</button>
-        </form>
-    </main>
-    
+  <main class="auth-shell">
+    <section class="auth-intro"><a class="brand" href="main_page/main.html">DUO<span>/</span>PLAY</a>
+      <p class="eyebrow">Bom te ver de volta</p>
+      <h1>Seu time está esperando.</h1>
+      <p>Retome suas conexões, ajuste suas preferências e descubra quem combina com sua próxima partida.</p>
+    </section>
+    <section class="auth-card">
+      <p class="eyebrow">Acesso</p>
+      <h2>Entrar na conta</h2>
+      <p>Use os dados que você cadastrou para continuar.</p>
+      <form class="auth-form" id="login-form"><label for="email">E-mail</label><input id="email" type="email"
+          placeholder="voce@email.com" autocomplete="email" required><label for="password">Senha</label><input
+          id="password" type="password" placeholder="Sua senha" autocomplete="current-password" required>
+        <p class="message" id="form-message" role="status"></p><button class="button-primary" type="submit">Entrar no
+          Duo <span aria-hidden="true">→</span></button>
+      </form>
+      <p class="auth-switch">Ainda não tem conta? <a href="cadastro.html">Criar meu perfil</a></p><a class="back-link"
+        href="main_page/main.html">← Voltar para início</a>
+    </section>
+  </main>
+  <script>
+    document.querySelector('#login-form').addEventListener('submit', (event) => { event.preventDefault(); const user = JSON.parse(localStorage.getItem('duoplayUser') || 'null'); const email = document.querySelector('#email').value; const password = document.querySelector('#password').value; const message = document.querySelector('#form-message'); if (!user) { message.textContent = 'Nenhuma conta encontrada. Crie seu perfil primeiro.'; return; } if (user.email !== email || user.password !== password) { message.textContent = 'E-mail ou senha incorretos.'; return; } localStorage.setItem('duoplayLoggedIn', 'true'); window.location.href = 'main_page/main.html'; });
+  </script>
 </body>
+
 </html>
