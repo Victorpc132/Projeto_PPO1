@@ -30,3 +30,14 @@ $('#filter-form').addEventListener('submit', (event) => { event.preventDefault()
 document.querySelectorAll('.accept').forEach((button) => button.addEventListener('click', () => { button.closest('.friend-request').remove(); toast('Solicitação aceita. Marina agora é sua amiga.'); }));
 $('#clear-account').addEventListener('click', () => { localStorage.clear(); toast('Dados locais apagados'); setTimeout(() => { window.location.href = '../cadastro.html'; }, 1000); });
 renderHighlights(); renderPlayers(); fillProfile();
+
+
+
+const hoje = new Date()
+    const dataFormatada = hoje.toLocaleDateString('pt-br',{
+      weekday: 'long',
+      day: 'numeric',
+      month: 'long'
+    });
+
+document.getElementById('dia_mes').innerText = dataFormatada;
