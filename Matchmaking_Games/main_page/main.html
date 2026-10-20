@@ -11,16 +11,20 @@
 
 <body>
   <div class="app-shell">
-    <aside class="sidebar"><a class="brand" href="#inicio">DUO<span>/</span>PLAY</a>
+    <aside class="sidebar">
+      <a class="brand" href="/main">DUO<span>/</span>PLAY</a>
       <p class="sidebar-label">Seu espaço de jogo</p>
-      <nav class="nav-list" aria-label="Navegação principal"><button class="nav-item active"
-          data-view="inicio"><span>⌂</span> Visão geral</button><button class="nav-item"
-          data-view="perfil"><span>◉</span> Meu perfil</button><button class="nav-item"
-          data-view="preferencias"><span>✦</span> Preferências</button><button class="nav-item"
-          data-view="encontrar"><span>⌕</span> Encontrar jogadores</button><button class="nav-item"
-          data-view="amigos"><span>♡</span> Amigos</button></nav>
-      <div class="sidebar-bottom"><button class="nav-item" data-view="configuracoes"><span>⚙</span>
-          Configurações</button><a class="logout-link" href="../login.html">Sair da conta</a></div>
+      <nav class="nav-list" aria-label="Navegação principal">
+        <button class="nav-item active" data-view="inicio"><span>⌂</span> Visão geral</button>
+        <button class="nav-item" data-view="perfil"><span>◉</span> Meu perfil</button>
+        <button class="nav-item" data-view="preferencias"><span>✦</span> Preferências</button>
+        <button class="nav-item" data-view="encontrar"><span>⌕</span> Encontrar jogadores</button>
+        <button class="nav-item" data-view="amigos"><span>♡</span> Amigos</button>
+      </nav>
+      <div class="sidebar-bottom">
+        <button class="nav-item" data-view="configuracoes"><span>⚙</span> Configurações</button>
+        <a class="logout-link" href="/login">Sair da conta</a>
+      </div>
     </aside>
     <main class="content">
       <header class="topbar"><button class="mobile-menu" id="menu-toggle" aria-label="Abrir menu">☰</button>
@@ -177,24 +181,12 @@
           </div>
         </div>
         <div class="panel friend-list">
-          <div class="friend-request">
-            <div class="avatar pink">MA</div>
-            <div><strong>Marina Alves</strong>
-              <p>Enviou uma solicitação · Valorant</p>
-            </div><button class="small-button accept">Aceitar</button><button
-              class="small-button decline">Recusar</button>
-          </div>
-          <div class="friend-row">
-            <div class="avatar blue">RL</div>
-            <div><strong>Rafael Lima</strong>
-              <p>Online agora · League of Legends</p>
-            </div><span class="online-dot"></span><button class="small-button">Ver perfil</button>
-          </div>
-          <div class="friend-row">
-            <div class="avatar gold">BS</div>
-            <div><strong>Bianca Souza</strong>
-              <p>Offline há 2h · Fortnite</p>
-            </div><button class="small-button">Ver perfil</button>
+          <div class="friend-request empty-state">
+            <div class="avatar pink">+</div>
+            <div>
+              <strong>Nenhuma solicitação no momento</strong>
+              <p>Quando alguém mandar convite, ele aparecerá aqui.</p>
+            </div>
           </div>
         </div>
       </section>

@@ -10,7 +10,7 @@
 
 <body>
   <main class="auth-shell">
-    <section class="auth-intro"><a class="brand" href="main_page/main.html">DUO<span>/</span>PLAY</a>
+    <section class="auth-intro"><a class="brand" href="/main">DUO<span>/</span>PLAY</a>
       <p class="eyebrow">Bom te ver de volta</p>
       <h1>Seu time está esperando.</h1>
       <p>Retome suas conexões, ajuste suas preferências e descubra quem combina com sua próxima partida.</p>
@@ -25,13 +25,35 @@
         <p class="message" id="form-message" role="status"></p><button class="button-primary" type="submit">Entrar no
           Duo <span aria-hidden="true">→</span></button>
       </form>
-      <p class="auth-switch">Ainda não tem conta? <a href="cadastro.html">Criar meu perfil</a></p><a class="back-link"
-        href="main_page/main.html">← Voltar para início</a>
+      <p class="auth-switch">Ainda não tem conta? <a href="/cadastro">Criar meu perfil</a></p><a class="back-link"
+        href="/main">← Voltar para início</a>
     </section>
   </main>
   <script>
-    document.querySelector('#login-form').addEventListener('submit', (event) => { event.preventDefault(); const user = JSON.parse(localStorage.getItem('duoplayUser') || 'null'); const email = document.querySelector('#email').value; const password = document.querySelector('#password').value; const message = document.querySelector('#form-message'); if (!user) { message.textContent = 'Nenhuma conta encontrada. Crie seu perfil primeiro.'; return; } if (user.email !== email || user.password !== password) { message.textContent = 'E-mail ou senha incorretos.'; return; } localStorage.setItem('duoplayLoggedIn', 'true'); window.location.href = 'main_page/main.html'; });
+    document.querySelector('#login-form').addEventListener('submit', async (event) => {
+      event.preventDefault();
+
+      const email = document.querySelector('#email').value.trim();
+      const password = document.querySelector('#password').value;
+      const message = document.querySelector('#form-message');
+
+      message.textContent = 'Entrando...';
+
+      const response = await fetch('/api/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password })
+      });
+
+      const result = await response.json();
+      message.textContent = result.message || 'Erro ao entrar.';
+
+      if (response.ok) {
+        localStorage.setItem('duoplayLoggedIn', 'true');
+        localStorage.setItem('duoplayUser', JSON.stringify(result.user));
+        window.location.href = '/main';
+      }
+    });
   </script>
 </body>
-
 </html>
