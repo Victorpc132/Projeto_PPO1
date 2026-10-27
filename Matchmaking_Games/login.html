@@ -19,17 +19,37 @@
       <p class="eyebrow">Acesso</p>
       <h2>Entrar na conta</h2>
       <p>Use os dados que você cadastrou para continuar.</p>
-      <form class="auth-form" id="login-form"><label for="email">E-mail</label><input id="email" type="email"
-          placeholder="voce@email.com" autocomplete="email" required><label for="password">Senha</label><input
-          id="password" type="password" placeholder="Sua senha" autocomplete="current-password" required>
-        <p class="message" id="form-message" role="status"></p><button class="button-primary" type="submit">Entrar no
-          Duo <span aria-hidden="true">→</span></button>
+      <form class="auth-form" id="login-form">
+        <label for="email">E-mail</label>
+        <input id="email" type="email" placeholder="voce@email.com" autocomplete="email" required>
+        <label for="password">Senha</label>
+        <div class="password-field">
+          <input id="password" type="password" placeholder="Sua senha" autocomplete="current-password" required>
+          <button type="button" class="view-toggle" id="password-toggle" aria-label="Mostrar senha">👁️</button>
+        </div>
+        <p class="message" id="form-message" role="status"></p>
+        <button class="button-primary" type="submit">Entrar no Duo <span aria-hidden="true">→</span></button>
       </form>
       <p class="auth-switch">Ainda não tem conta? <a href="/cadastro">Criar meu perfil</a></p><a class="back-link"
         href="/main">← Voltar para início</a>
     </section>
   </main>
   <script>
+    const loggedUser = JSON.parse(localStorage.getItem('duoplayUser') || 'null');
+    if (loggedUser?.id) {
+      window.location.replace('/main');
+    }
+
+    const passwordField = document.querySelector('#password');
+    const passwordToggle = document.querySelector('#password-toggle');
+
+    passwordToggle.addEventListener('click', () => {
+      const isPassword = passwordField.type === 'password';
+      passwordField.type = isPassword ? 'text' : 'password';
+      passwordToggle.textContent = isPassword ? '🙈' : '👁️';
+      passwordToggle.setAttribute('aria-label', isPassword ? 'Ocultar senha' : 'Mostrar senha');
+    });
+
     document.querySelector('#login-form').addEventListener('submit', async (event) => {
       event.preventDefault();
 
@@ -51,7 +71,8 @@
       if (response.ok) {
         localStorage.setItem('duoplayLoggedIn', 'true');
         localStorage.setItem('duoplayUser', JSON.stringify(result.user));
-        window.location.href = '/main';
+        const redirect = new URLSearchParams(window.location.search).get('redirect') || '/main';
+        window.location.href = redirect;
       }
     });
   </script>

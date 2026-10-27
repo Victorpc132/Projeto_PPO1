@@ -18,6 +18,8 @@ db.exec(`
         level TEXT,
         style TEXT,
         availability TEXT,
+        favorite TEXT,
+        role TEXT,
         FOREIGN KEY (user_id) REFERENCES user(id)
     );
 
@@ -26,6 +28,8 @@ db.exec(`
         game TEXT,
         platform TEXT,
         time TEXT,
+        favorite TEXT,
+        role TEXT,
         FOREIGN KEY (user_id) REFERENCES user(id)
     );
 

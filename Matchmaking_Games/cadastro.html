@@ -20,26 +20,50 @@
       <p class="eyebrow">Primeiro passo</p>
       <h2>Crie seu perfil</h2>
       <p>Uma conta simples para começar a encontrar sua dupla.</p>
-      <form class="auth-form" id="register-form"><label for="name">Como podemos te chamar?</label><input id="name"
-          name="name" type="text" placeholder="Seu nickname" autocomplete="name" required><label for="email">Seu melhor
-          e-mail</label><input id="email" name="email" type="email" placeholder="voce@email.com" autocomplete="email"
-          required><label for="password">Crie uma senha</label><input id="password" name="password" type="password"
-          placeholder="Mínimo de 6 caracteres" minlength="6" autocomplete="new-password" required>
-        <p class="password-note" id="password-note"></p><label for="password-confirm">Confirme sua senha</label><input
-          id="password-confirm" type="password" placeholder="Repita sua senha" minlength="6" autocomplete="new-password"
-          required>
-        <p class="message" id="form-message" role="status"></p><button class="button-primary" type="submit">Criar minha
-          conta <span aria-hidden="true">→</span></button>
+      <form class="auth-form" id="register-form">
+        <label for="name">Como podemos te chamar?</label>
+        <input id="name" name="name" type="text" placeholder="Seu nickname" autocomplete="name" required>
+        <label for="email">Seu melhor e-mail</label>
+        <input id="email" name="email" type="email" placeholder="voce@email.com" autocomplete="email" required>
+        <label for="password">Crie uma senha</label>
+        <div class="password-field">
+          <input id="password" name="password" type="password" placeholder="Mínimo de 6 caracteres" minlength="6" autocomplete="new-password" required>
+          <button type="button" class="view-toggle" id="password-toggle" aria-label="Mostrar senha">👁️</button>
+        </div>
+        <p class="password-note" id="password-note"></p>
+        <label for="password-confirm">Confirme sua senha</label>
+        <div class="password-field">
+          <input id="password-confirm" type="password" placeholder="Repita sua senha" minlength="6" autocomplete="new-password" required>
+          <button type="button" class="view-toggle" id="password-confirm-toggle" aria-label="Mostrar senha">👁️</button>
+        </div>
+        <p class="message" id="form-message" role="status"></p>
+        <button class="button-primary" type="submit">Criar minha conta <span aria-hidden="true">→</span></button>
       </form>
       <p class="auth-switch">Já tem uma conta? <a href="/login">Entrar agora</a></p><a class="back-link"
         href="/main">← Voltar para início</a>
     </section>
   </main>
   <script>
+    const currentUser = JSON.parse(localStorage.getItem('duoplayUser') || 'null');
+    if (currentUser?.id) {
+      window.location.replace('/main');
+    }
+
     const form = document.querySelector('#register-form');
     const password = document.querySelector('#password');
+    const passwordConfirm = document.querySelector('#password-confirm');
     const note = document.querySelector('#password-note');
     const message = document.querySelector('#form-message');
+
+    const toggleVisibility = (input, button) => {
+      const isPassword = input.type === 'password';
+      input.type = isPassword ? 'text' : 'password';
+      button.textContent = isPassword ? '🙈' : '👁️';
+      button.setAttribute('aria-label', isPassword ? 'Ocultar senha' : 'Mostrar senha');
+    };
+
+    document.querySelector('#password-toggle').addEventListener('click', () => toggleVisibility(password, document.querySelector('#password-toggle')));
+    document.querySelector('#password-confirm-toggle').addEventListener('click', () => toggleVisibility(passwordConfirm, document.querySelector('#password-confirm-toggle')));
 
     password.addEventListener('input', () => {
       const length = password.value.length;
