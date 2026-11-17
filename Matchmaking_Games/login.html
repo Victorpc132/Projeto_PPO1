@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="theme-color" content="#090d18">
+  <title>Entrar | DuoPlay</title><link rel="stylesheet" href="Pages.css">
+</head>
+<body>
+  <main class="auth-shell">
+    <section class="auth-intro">
+      <a class="brand" href="/">DUO<span>/</span>PLAY</a>
+      <p class="eyebrow">Bom te ver de volta</p>
+      <h1>Seu time está esperando.</h1>
+      <p>Retome suas conexões, ajuste suas preferências e encontre quem combina com sua próxima partida.</p>
+    </section>
+    <section class="auth-card" aria-labelledby="auth-title">
+      <p class="eyebrow">Acesso</p><h2 id="auth-title">Entrar na conta</h2><p>Use os dados que você cadastrou para continuar.</p>
+      <form class="auth-form" id="login-form">
+        <label for="email">E-mail</label><input id="email" name="email" type="email" maxlength="254" autocomplete="email" placeholder="voce@email.com" required>
+        <label for="password">Senha</label>
+        <div class="password-field"><input id="password" name="password" type="password" maxlength="128" autocomplete="current-password" placeholder="Sua senha" required><button type="button" class="view-toggle" data-toggle-password="password" aria-label="Mostrar senha">◉</button></div>
+        <p class="message" id="form-message" role="status" aria-live="polite"></p>
+        <button class="button-primary" type="submit">Entrar no Duo <span aria-hidden="true">→</span></button>
+      </form>
+      <p class="auth-switch">Ainda não tem conta? <a href="/cadastro">Criar perfil</a></p><a class="back-link" href="/">← Voltar</a>
+    </section>
+  </main>
+  <script>
+    const form = document.querySelector('#login-form');
+    const message = document.querySelector('#form-message');
+    document.querySelectorAll('[data-toggle-password]').forEach((button) => button.addEventListener('click', () => {
+      const input = document.getElementById(button.dataset.togglePassword);
+      const visible = input.type === 'password';
+      input.type = visible ? 'text' : 'password';
+      button.setAttribute('aria-label', visible ? 'Ocultar senha' : 'Mostrar senha');
+    }));
+    fetch('/api/me').then((response) => response.ok ? window.location.replace('/main') : null).catch(() => {});
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const submit = form.querySelector('[type="submit"]');
+      const email = document.querySelector('#email').value.trim();
+      const password = document.querySelector('#password').value;
+      submit.disabled = true; message.textContent = 'Validando acesso…';
+      try {
+        const response = await fetch('/api/login', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email, password }) });
+        const result = await response.json();
+        if (!response.ok) throw new Error(result.message || 'Não foi possível entrar.');
+        const requested = new URLSearchParams(window.location.search).get('redirect');
+        const destination = requested && requested.startsWith('/') && !requested.startsWith('//') ? requested : '/main';
+        window.location.replace(destination);
+      } catch (error) {
+        message.textContent = error instanceof Error ? error.message : 'Não foi possível entrar. Tente novamente.';
+        submit.disabled = false;
+      }
+    });
+  </script>
+</body>
+</html>

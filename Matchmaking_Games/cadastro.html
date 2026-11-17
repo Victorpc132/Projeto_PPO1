@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="theme-color" content="#090d18">
+  <title>Criar conta | DuoPlay</title><link rel="stylesheet" href="Pages.css">
+</head>
+<body>
+  <main class="auth-shell">
+    <section class="auth-intro">
+      <a class="brand" href="/">DUO<span>/</span>PLAY</a>
+      <p class="eyebrow">Seu próximo squad começa aqui</p>
+      <h1>Jogue com quem joga como você.</h1>
+      <p>Encontre parceiros pelo jogo, rank, função e pelo horário em que a diversão acontece.</p>
+    </section>
+    <section class="auth-card" aria-labelledby="auth-title">
+      <p class="eyebrow">Primeiro passo</p><h2 id="auth-title">Crie seu perfil</h2><p>Uma conta simples para começar a encontrar sua dupla.</p>
+      <form class="auth-form" id="register-form">
+        <label for="name">Nickname</label><input id="name" name="name" type="text" maxlength="32" autocomplete="nickname" placeholder="Como podemos te chamar?" required>
+        <label for="email">E-mail</label><input id="email" name="email" type="email" maxlength="254" autocomplete="email" placeholder="voce@email.com" required>
+        <label for="password">Senha <span class="label-hint">mínimo 8 caracteres</span></label>
+        <div class="password-field"><input id="password" name="password" type="password" minlength="8" maxlength="128" autocomplete="new-password" placeholder="Crie uma senha segura" required><button type="button" class="view-toggle" data-toggle-password="password" aria-label="Mostrar senha">◉</button></div>
+        <label for="password-confirm">Confirme sua senha</label>
+        <div class="password-field"><input id="password-confirm" type="password" minlength="8" maxlength="128" autocomplete="new-password" placeholder="Digite a senha novamente" required><button type="button" class="view-toggle" data-toggle-password="password-confirm" aria-label="Mostrar senha">◉</button></div>
+        <p class="message" id="form-message" role="status" aria-live="polite"></p>
+        <button class="button-primary" type="submit">Criar minha conta <span aria-hidden="true">→</span></button>
+      </form>
+      <p class="auth-switch">Já tem uma conta? <a href="/login">Entrar</a></p><a class="back-link" href="/">← Voltar</a>
+    </section>
+  </main>
+  <script>
+    const form = document.querySelector('#register-form');
+    const message = document.querySelector('#form-message');
+    document.querySelectorAll('[data-toggle-password]').forEach((button) => button.addEventListener('click', () => {
+      const input = document.getElementById(button.dataset.togglePassword);
+      const visible = input.type === 'password';
+      input.type = visible ? 'text' : 'password';
+      button.setAttribute('aria-label', visible ? 'Ocultar senha' : 'Mostrar senha');
+    }));
+    fetch('/api/me').then((response) => response.ok ? window.location.replace('/main') : null).catch(() => {});
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const submit = form.querySelector('[type="submit"]');
+      const username = document.querySelector('#name').value.trim();
+      const email = document.querySelector('#email').value.trim();
+      const password = document.querySelector('#password').value;
+      const confirmation = document.querySelector('#password-confirm').value;
+      if (password !== confirmation) { message.textContent = 'As senhas não coincidem.'; return; }
+      submit.disabled = true; message.textContent = 'Criando sua conta…';
+      try {
+        const response = await fetch('/api/register', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ username, email, password }) });
+        const result = await response.json();
+        if (!response.ok) throw new Error(result.message || 'Não foi possível criar a conta.');
+        message.textContent = 'Conta criada. Redirecionando para o login…';
+        window.setTimeout(() => { window.location.href = '/login'; }, 700);
+      } catch (error) {
+        message.textContent = error instanceof Error ? error.message : 'Não foi possível criar a conta. Tente novamente.';
+        submit.disabled = false;
+      }
+    });
+  </script>
+</body>
+</html>
